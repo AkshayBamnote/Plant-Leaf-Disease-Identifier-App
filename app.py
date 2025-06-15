@@ -5,7 +5,7 @@ import json
 from PIL import Image
 from tensorflow.keras.preprocessing.image import img_to_array
 import os
-import gdown # New import for downloading from Google Drive
+import gdown 
 
 st.set_page_config(
     page_title="Plant Disease Detector",
@@ -14,13 +14,10 @@ st.set_page_config(
     initial_sidebar_state="auto"
 )
 
-# Ensure the model and class_labels.json are in the same directory as this app.py file.
 MODEL_PATH = "plant_disease_detector_vgg19.h5"
 LABELS_PATH = "class_labels.json"
 
-# --- Google Drive File ID for your model ---
-# IMPORTANT: REPLACE THIS WITH YOUR ACTUAL GOOGLE DRIVE FILE ID
-# Ensure the file is shared publicly ("Anyone with the link")
+
 GOOGLE_DRIVE_FILE_ID = "1AK0wQjUix8P-D43kbHsoDURF91ZaFPnA" 
 
 @st.cache_resource # Cache the model loading to avoid reloading on every rerun
@@ -32,7 +29,6 @@ def load_model():
     if not os.path.exists(MODEL_PATH):
         st.info("Model file not found locally. Attempting to download from Google Drive...")
         try:
-            # Construct the Google Drive download URL
             gdown_url = f"https://drive.google.com/uc?id={GOOGLE_DRIVE_FILE_ID}"
             gdown.download(gdown_url, MODEL_PATH, quiet=False)
             st.success("Model downloaded successfully!")
@@ -66,8 +62,8 @@ def load_class_labels():
 model = load_model()
 class_labels = load_class_labels()
 
-# --- Rest of your Streamlit App UI ---
-st.title("🌿 Plant Leaf Disease Detector")
+#Main UI
+st.title("Plant Leaf Disease Detector by Akshay Bamnote")
 st.write("Upload an image of a plant leaf to detect potential diseases.")
 
 if model and class_labels:
@@ -94,13 +90,13 @@ if model and class_labels:
             st.success(f"**Prediction: {predicted_class_name}**")
             st.write(f"Confidence: {np.max(predictions) * 100:.2f}%")
 
-            # Display all probabilities (optional)
-            st.markdown("---")
-            st.subheader("All Probabilities:")
-            prob_dict = {class_labels[str(i)]: float(prob) for i, prob in enumerate(predictions[0])}
-            # Sort probabilities for better readability
-            sorted_prob_dict = dict(sorted(prob_dict.items(), key=lambda item: item[1], reverse=True))
-            st.json(sorted_prob_dict)
+            # # Display all probabilities (optional)
+            # st.markdown("---")
+            # st.subheader("All Probabilities:")
+            # prob_dict = {class_labels[str(i)]: float(prob) for i, prob in enumerate(predictions[0])}
+            # # Sort probabilities for better readability
+            # sorted_prob_dict = dict(sorted(prob_dict.items(), key=lambda item: item[1], reverse=True))
+            # st.json(sorted_prob_dict)
 
         except Exception as e:
             st.error(f"An error occurred during prediction: {e}")
