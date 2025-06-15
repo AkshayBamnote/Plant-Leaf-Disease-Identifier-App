@@ -10,7 +10,6 @@
 - [Running the Streamlit App Locally](#7-running-the-streamlit-app-locally)
 - [Deployment to Streamlit Community Cloud](#8-deployment-to-streamlit-community-cloud)
 - [Contributing](#9-contributing)
-- [License](#license)
 
 ## 1. Introduction
 This project implements a web-based Plant Leaf Disease Identifier. It uses a deep learning model (VGG19 with transfer learning) to classify diseases from images of plant leaves. The model is designed to be trained on powerful cloud GPUs (like Google Colab) and then deployed as a user-friendly web application using Streamlit for local execution or cloud sharing.
@@ -23,7 +22,7 @@ This project implements a web-based Plant Leaf Disease Identifier. It uses a dee
 - Easy-to-use Streamlit interface.
 
 ## 3. How it Works
-- **Training:** Fine-tune VGG19 on a plant disease dataset using `main_ml_code.py`.
+- **Training:** Fine-tune VGG19 on a plant disease dataset using `leaf.py`.
 - **Model Saving:** Save the model (.h5) and labels (.json).
 - **Model Hosting:** Host the model on Google Drive and download it using `gdown`.
 - **Deployment:** Use `app.py` to predict diseases from user-uploaded images.
@@ -31,7 +30,7 @@ This project implements a web-based Plant Leaf Disease Identifier. It uses a dee
 ## 4. Project Structure
 ```
 ├── app.py                      # Streamlit web application
-├── main_ml_code.py             # Model training script
+├── leaf.py                     # Model training script
 ├── class_labels.json           # Label mapping
 ├── requirements.txt            # Dependencies
 └── README.md                   # Project documentation
@@ -43,11 +42,6 @@ This project implements a web-based Plant Leaf Disease Identifier. It uses a dee
 - Git
 - VS Code (optional)
 
-### Clone the Repository
-```bash
-git clone https://github.com/YourGitHubUsername/plant-leaf-disease-identifier.git
-cd plant-leaf-disease-identifier
-```
 
 ### Create and Activate Conda Environment
 ```bash
@@ -67,7 +61,7 @@ python -c "import sys; import tensorflow as tf; import streamlit; import google.
 
 ## 6. Model Training & Saving (Google Colab)
 ### Train the Model
-- Use `main_ml_code.py` on Google Colab with GPU runtime enabled.
+- Use `leaf.py` on Google Colab with GPU runtime enabled (T4-Gpu).
 
 ### Save Model and Labels
 ```python
@@ -100,6 +94,3 @@ streamlit run app.py
 
 ## 9. Contributing
 Fork the repo, make changes, and submit a pull request.
-
-## License
-This project is open-source and available under the [MIT License](LICENSE).
